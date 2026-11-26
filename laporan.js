@@ -23,7 +23,8 @@
   function periode(d) {
     if (d.bulan) return blnPanjang(d.bulan);
     var b = d.daftarBulan || [];
-    return b.length ? 'Semua bulan (' + blnPanjang(b[0]) + ' – ' + blnPanjang(b[b.length - 1]) + ')' : 'Semua bulan';
+    if (!b.length) return 'Semua bulan';
+    return b.length === 1 ? 'Semua bulan (' + blnPanjang(b[0]) + ')' : 'Semua bulan (' + blnPanjang(b[0]) + ' – ' + blnPanjang(b[b.length - 1]) + ')';
   }
   function waktuCetak() {
     var t = new Date();
