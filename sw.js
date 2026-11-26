@@ -1,7 +1,7 @@
 /* Menyimpan tampilan aplikasi di HP supaya tetap terbuka saat sinyal lemah.
    Data laporan tidak disimpan di sini; antrean laporan ada di localStorage. */
-var CACHE = 'paten-v4';
-var FILES = ['./', './index.html', './dashboard.html', './api.js', './manifest.json',
+var CACHE = 'paten-v5';
+var FILES = ['./', './index.html', './dashboard.html', './api.js', './manifest.json', './manifest-dashboard.json', './icons/dash-192.png', './icons/dash-512.png',
   './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/apple-touch-icon.png', './icons/favicon-32.png'];
 
 self.addEventListener('install', function (e) {
