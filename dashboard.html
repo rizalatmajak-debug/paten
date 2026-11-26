@@ -13,6 +13,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Dashboard PATEN">
 <script src="api.js"></script>
+<script src="laporan.js"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -69,6 +70,8 @@ td.n,th.n{text-align:right}
 .pin{max-width:340px;margin:80px auto;background:#fff;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px}
 .pin input{height:48px;border:1px solid #CBD5E1;border-radius:10px;padding:0 14px;font-size:20px;letter-spacing:6px;text-align:center}
 .err{color:#991B1B;font-size:13px;font-weight:600}
+.btn2{height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;font-weight:600;padding:0 14px;cursor:pointer;font-size:14px}
+.btn2:hover{background:rgba(255,255,255,.12)}.btn2:disabled{opacity:.45;cursor:default}
 .hidden{display:none!important}
 .loading{padding:60px;text-align:center;color:#64748B}
 .empty{color:#64748B;font-size:14px}
@@ -80,6 +83,8 @@ td.n,th.n{text-align:right}
   <div class="ctl" id="ctl">
     <label>Periode <select id="bulan"><option value="">Semua bulan</option></select></label>
     <button class="btn" type="button" id="muat">Perbarui</button>
+    <button class="btn2" type="button" id="unduhPdf" disabled>Unduh PDF</button>
+    <button class="btn2" type="button" id="unduhWord" disabled>Unduh Word</button>
   </div>
 </div></div>
 
@@ -162,6 +167,7 @@ function donut(box, parts, center, sub, showPct) {
 }
 
 function render(d) {
+  window.DATA_TERAKHIR = d; $('unduhPdf').disabled = false; $('unduhWord').disabled = false;
   var warga = d.wargaLk + d.wargaPr;
   var sel = $('bulan'), cur = d.bulan;
   sel.innerHTML = '<option value="">Semua bulan</option>';
@@ -243,6 +249,8 @@ function aturTampil() {
 $('lihatBelum').onclick = function () { LIHAT_BELUM = !LIHAT_BELUM; aturTampil(); };
 $('lihatDesa').onclick = function () { LIHAT_DESA = !LIHAT_DESA; aturTampil(); };
 $('muat').onclick = muat;
+$('unduhPdf').onclick = function () { PATEN_LAPORAN.unduhPDF(); };
+$('unduhWord').onclick = function () { PATEN_LAPORAN.unduhWord(this); };
 $('bulan').onchange = muat;
 $('pinOk').onclick = function () { PIN = $('pin').value.trim(); muat(); };
 $('pin').onkeydown = function (e) { if (e.key === 'Enter') $('pinOk').click(); };

@@ -232,6 +232,7 @@ function onOpen() {
     .addItem('2. Atur PIN dashboard', 'aturPin')
     .addItem('3. Atur kode petugas', 'aturKodePetugas')
     .addItem('Isi ulang daftar desa Humbang Hasundutan', 'isiDaftarDesa')
+    .addItem('Perbaiki rumus Rekap Desa', 'perbaikiRekapDesa')
     .addSeparator()
     .addItem('Tampilkan tautan aplikasi', 'tampilkanTautan')
     .addItem('Arsipkan sekarang', 'arsipBulanan')
@@ -455,8 +456,27 @@ function isiDaftarDesa_() {
   sh.getRange('A2').setValue('Satu baris per desa, maksimal ' + CFG.MAKS_DESA + ' desa. Sumber awal: kode wilayah Kemendagri Kabupaten Humbang Hasundutan.');
 }
 
+/* Pemisah argumen rumus mengikuti lokal Sheet: "," (mis. Inggris) atau ";" (mis. Indonesia). */
+function pemisah_() {
+  const sh = SpreadsheetApp.getActive().getSheetByName(CFG.SHEET_SET);
+  const c = sh.getRange(sh.getMaxRows(), sh.getMaxColumns());
+  const lama = c.getFormula() || c.getValue();
+  c.setFormula('=IF(TRUE,1,0)');
+  SpreadsheetApp.flush();
+  const sep = c.getValue() === 1 ? ',' : ';';
+  c.clearContent();
+  if (lama !== '' && lama !== null) c.setValue(lama);
+  return sep;
+}
+
+function perbaikiRekapDesa() {
+  siapkanRekapDesa_();
+  SpreadsheetApp.getUi().alert('Rumus Rekap Desa sudah diperbaiki.');
+}
+
 function siapkanRekapDesa_() {
   const ss = SpreadsheetApp.getActive();
+  const S = pemisah_();
   const last = 5 + CFG.MAKS_DESA - 1;
   ss.getSheetByName(CFG.SHEET_SET).getRange('B5').setFormula("=COUNTA('Daftar Desa'!B5:B" + last + ")");
   ss.getSheetByName(CFG.SHEET_DATA).getRange('C2:D').clearDataValidations();
@@ -466,17 +486,17 @@ function siapkanRekapDesa_() {
     .filter(function (r) { return String(r[0]).trim(); }).length;
   const top = 9, rows = [];
   for (let i = 0; i < Math.max(n, 1); i++) {
-    const r = top + i, s = 5 + i, k = 'Data!$C:$C,$A' + r + ',Data!$D:$D,$B' + r;
-    const kosong = 'IF($B' + r + '="","",';
+    const r = top + i, s = 5 + i, k = 'Data!$C:$C' + S + '$A' + r + S + 'Data!$D:$D' + S + '$B' + r;
+    const kosong = 'IF($B' + r + '=""' + S + '""' + S;
     rows.push([
-      "=IF('Daftar Desa'!B" + s + "=\"\",\"\",'Daftar Desa'!A" + s + ")",
-      "=IF('Daftar Desa'!B" + s + "=\"\",\"\",'Daftar Desa'!B" + s + ")",
+      "=IF('Daftar Desa'!B" + s + '=""' + S + '""' + S + "'Daftar Desa'!A" + s + ')',
+      "=IF('Daftar Desa'!B" + s + '=""' + S + '""' + S + "'Daftar Desa'!B" + s + ')',
       '=' + kosong + 'COUNTIFS(' + k + '))',
-      '=' + kosong + 'SUMIFS(Data!$F:$F,' + k + ')+SUMIFS(Data!$G:$G,' + k + '))',
-      '=' + kosong + 'SUMIFS(Data!$O:$O,' + k + '))',
-      '=' + kosong + 'SUMIFS(Data!$P:$P,' + k + '))',
-      '=' + kosong + 'IF($C' + r + '=0,"",MAXIFS(Data!$B:$B,' + k + ')))',
-      '=' + kosong + 'IF($C' + r + '=0,"Belum dikunjungi","Sudah dikunjungi"))'
+      '=' + kosong + 'SUMIFS(Data!$F:$F' + S + k + ')+SUMIFS(Data!$G:$G' + S + k + '))',
+      '=' + kosong + 'SUMIFS(Data!$O:$O' + S + k + '))',
+      '=' + kosong + 'SUMIFS(Data!$P:$P' + S + k + '))',
+      '=' + kosong + 'IF($C' + r + '=0' + S + '""' + S + 'MAXIFS(Data!$B:$B' + S + k + ')))',
+      '=' + kosong + 'IF($C' + r + '=0' + S + '"Belum dikunjungi"' + S + '"Sudah dikunjungi"))'
     ]);
   }
   const maxRow = Math.max(sh.getMaxRows(), top + CFG.MAKS_DESA);
@@ -485,7 +505,7 @@ function siapkanRekapDesa_() {
   sh.getRange(top, 1, rows.length, 8).setFormulas(rows);
   sh.getRange(top, 6, rows.length, 1).setNumberFormat('"Rp"#,##0');
   sh.getRange(top, 7, rows.length, 1).setNumberFormat('dd/mm/yyyy');
-  sh.getRange('B5').setFormula('=COUNTIF(H' + top + ':H' + (top + CFG.MAKS_DESA - 1) + ',"Sudah dikunjungi")');
+  sh.getRange('B5').setFormula('=COUNTIF(H' + top + ':H' + (top + CFG.MAKS_DESA - 1) + S + '"Sudah dikunjungi")');
 }
 
 /* ---------- Arsip bulanan ---------- */
