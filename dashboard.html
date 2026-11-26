@@ -55,6 +55,9 @@ main.wrap{display:flex;flex-direction:column;gap:18px;padding-top:24px;padding-b
 .chip{font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
 .c-ok{background:#E6F1F2;color:#0F5E63}.c-no{background:#F1F5F9;color:#64748B}.c-pr{background:#FEF3C7;color:#92400E}.c-be{background:#FEE2E2;color:#991B1B}
 .tbl{overflow-x:auto}
+.lihat{align-self:flex-start;height:36px;border-radius:9px;border:1px solid #0F5E63;background:#fff;color:#0F5E63;font-weight:600;font-size:13px;padding:0 14px;cursor:pointer}
+.lihat:hover{background:#E6F1F2}
+.hrow2{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 table{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}
 th{text-align:left;background:#0F5E63;color:#fff;font-weight:600;padding:9px 10px}
 td{padding:9px 10px;border-bottom:1px solid #E2E8F0}
@@ -95,14 +98,14 @@ td.n,th.n{text-align:right}
   <div class="grid">
     <div class="card"><h2>Layanan menurut jenis</h2><div id="d-layanan"></div></div>
     <div class="card"><h2>Warga terlayani</h2><div id="d-warga"></div></div>
-    <div class="card"><h2>Cakupan desa</h2><div id="d-cakupan"></div><p class="note" id="belum"></p></div>
+    <div class="card"><h2>Cakupan desa</h2><div id="d-cakupan"></div><button class="lihat" type="button" id="lihatBelum" aria-expanded="false" aria-controls="belum">Lihat nama desa</button><p class="note hidden" id="belum"></p></div>
     <div class="card"><h2>Status temuan lapangan</h2><div id="d-temuan"></div></div>
   </div>
   <div class="row2">
     <div class="card wide"><h2>Temuan yang belum selesai</h2><div id="terbuka" style="display:flex;flex-direction:column;gap:10px"></div></div>
     <div class="card narrow"><h2>Warga per bulan</h2><div class="bars" id="bars"></div><div class="blab" id="blab"></div></div>
   </div>
-  <div class="card"><h2>Rekap per desa</h2><div class="tbl"><table><thead><tr>
+  <div class="card"><div class="hrow2"><h2>Rekap per desa</h2><button class="lihat" type="button" id="lihatDesa" aria-expanded="false" aria-controls="tblDesa">Lihat rekap per desa</button></div><div class="tbl hidden" id="tblDesa"><table><thead><tr>
     <th>Desa</th><th>Kecamatan</th><th class="n">Kunjungan</th><th class="n">Warga</th><th class="n">Berkas</th><th>Terakhir</th><th>Status</th>
   </tr></thead><tbody id="desa"></tbody></table></div></div>
   <p class="note" id="waktu"></p>
@@ -183,6 +186,7 @@ function render(d) {
     pct(d.desaDikunjungi, d.totalDesa), d.desaDikunjungi + ' dari ' + d.totalDesa + ' desa', false);
   var belum = d.perDesa.filter(function (x) { return !x.kunjungan; }).map(function (x) { return x.desa; });
   $('belum').textContent = belum.length ? 'Belum dikunjungi: ' + belum.join(', ') + '.' : 'Semua desa sudah dikunjungi.';
+  JML_BELUM = belum.length; JML_DESA = d.perDesa.length; aturTampil();
   var st = { Selesai: '#16A34A', Proses: '#F59E0B', Belum: '#DC2626' };
   var totT = d.statusTemuan.reduce(function (a, s) { return a + s.n; }, 0);
   donut($('d-temuan'), d.statusTemuan.map(function (s) { return { label: s.label, n: s.n, color: st[s.label] }; }), fmt(totT), 'temuan', false);
@@ -226,6 +230,18 @@ function muat() {
   }).withFailureHandler(function () { $('loading').textContent = 'Data gagal dimuat. Periksa sinyal lalu tekan Perbarui.'; })
     .getDashboard(PIN, $('bulan').value);
 }
+var LIHAT_BELUM = false, LIHAT_DESA = false, JML_BELUM = 0, JML_DESA = 0;
+function aturTampil() {
+  $('belum').classList.toggle('hidden', !LIHAT_BELUM);
+  $('lihatBelum').setAttribute('aria-expanded', String(LIHAT_BELUM));
+  $('lihatBelum').textContent = LIHAT_BELUM ? 'Sembunyikan nama desa' : 'Lihat nama desa (' + JML_BELUM + ')';
+  $('lihatBelum').classList.toggle('hidden', !JML_BELUM && !LIHAT_BELUM);
+  $('tblDesa').classList.toggle('hidden', !LIHAT_DESA);
+  $('lihatDesa').setAttribute('aria-expanded', String(LIHAT_DESA));
+  $('lihatDesa').textContent = LIHAT_DESA ? 'Sembunyikan' : 'Lihat rekap per desa (' + JML_DESA + ' desa)';
+}
+$('lihatBelum').onclick = function () { LIHAT_BELUM = !LIHAT_BELUM; aturTampil(); };
+$('lihatDesa').onclick = function () { LIHAT_DESA = !LIHAT_DESA; aturTampil(); };
 $('muat').onclick = muat;
 $('bulan').onchange = muat;
 $('pinOk').onclick = function () { PIN = $('pin').value.trim(); muat(); };
