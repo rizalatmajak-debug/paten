@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Laporan PATEN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B2545">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="PATEN">
+<script src="api.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Roboto,"Segoe UI",system-ui,sans-serif;background:#F1F5F9;color:#1E293B;-webkit-tap-highlight-color:transparent}
+input,select,textarea,button{font:inherit;color:inherit}
+.app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:#F1F5F9}
+.top{background:#0B2545;color:#fff;padding:18px 20px 16px;display:flex;flex-direction:column;gap:6px}
+.top-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#C7D7EA}
+.brand{font-size:12px;font-weight:700;letter-spacing:2px;color:#5EEAD4}
+.back{background:none;border:0;color:#C7D7EA;padding:0;cursor:pointer;font-size:13px}
+.title{font-size:22px;font-weight:700}
+.sub{font-size:13px;color:#C7D7EA}
+.bar{display:flex;gap:6px;margin-top:8px}.bar i{flex:1;height:4px;border-radius:2px;background:#24466E}.bar i.on{background:#13A89E}
+main{flex:1;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.cap{font-size:12px;font-weight:700;letter-spacing:1.5px;color:#0F766E}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600}
+.in{height:46px;border:1px solid #CBD5E1;border-radius:10px;padding:0 12px;background:#fff;width:100%;font-size:15px}
+textarea.in{height:70px;padding:10px 12px;resize:vertical}
+.in:focus,button:focus-visible{outline:2px solid #13A89E;outline-offset:1px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.num{font-size:18px;font-weight:700;color:#0B2545}
+.total{display:flex;justify-content:space-between;align-items:center;background:#E7F6F5;border-radius:10px;padding:10px 12px;font-size:13px;font-weight:600;color:#0F766E}
+.total b{font-size:20px;color:#0B2545}
+.row{display:flex;align-items:center;justify-content:space-between;min-height:54px;border-bottom:1px solid #EEF2F6;gap:8px}
+.row:last-child{border-bottom:0}
+.step{display:flex;align-items:center;gap:10px}
+.sbtn{width:40px;height:40px;border-radius:10px;border:1px solid #CBD5E1;background:#fff;color:#0B2545;font-size:20px;cursor:pointer}
+.sbtn.plus{background:#13A89E;border:0;color:#fff}
+.cnt{min-width:24px;text-align:center;font-size:17px;font-weight:700;color:#0B2545}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#F1F5F9;border-radius:12px;padding:4px}
+.seg button{height:42px;border:0;border-radius:9px;background:transparent;color:#475569;font-weight:600;cursor:pointer}
+.seg button.on{background:#0B2545;color:#fff}
+.score{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.score button{height:44px;border-radius:10px;border:1px solid #CBD5E1;background:#fff;color:#0B2545;font-size:16px;font-weight:700;cursor:pointer}
+.score button.on{background:#13A89E;border-color:#13A89E;color:#fff}
+.dash{height:46px;border-radius:10px;border:1px dashed #94A3B8;background:#fff;color:#0B2545;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;width:100%}
+.hint{font-size:12px;color:#64748B;font-weight:400}
+.foot{position:sticky;bottom:0;padding:12px 16px 20px;background:#fff;border-top:1px solid #E2E8F0}
+.main-btn{width:100%;height:52px;border-radius:12px;border:0;background:#0B2545;color:#fff;font-weight:700;font-size:16px;cursor:pointer}
+.main-btn.go{background:#13A89E}
+.main-btn:disabled{opacity:.6}
+.err{background:#FEE2E2;color:#991B1B;border-radius:10px;padding:10px 12px;font-size:13px;font-weight:600}
+.warn{background:#FEF3C7;color:#92400E;border-radius:10px;padding:10px 12px;font-size:13px;display:flex;flex-direction:column;gap:8px}
+.warn button{align-self:flex-start;height:38px;border-radius:9px;border:0;background:#92400E;color:#fff;padding:0 14px;font-weight:600;cursor:pointer}
+.done{background:#0B2545;color:#fff;min-height:100vh;padding:56px 24px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px}
+.check{width:88px;height:88px;border-radius:44px;background:#13A89E;display:flex;align-items:center;justify-content:center}
+.sum{width:100%;background:#13345C;border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;text-align:left}
+.sum div{display:flex;justify-content:space-between;font-size:14px}.sum span{color:#C7D7EA}
+.white{background:#fff;color:#0B2545}
+.ghost{background:transparent;border:1px solid #5EEAD4;color:#5EEAD4;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.thumb{width:100%;max-height:160px;object-fit:cover;border-radius:10px}
+.hidden{display:none!important}
+.loading{padding:40px;text-align:center;color:#64748B}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="loading" id="loading">Memuat formulir…</div>
+
+  <!-- LANGKAH 1 -->
+  <section id="s1" class="hidden">
+    <div class="top">
+      <div class="top-row"><span class="brand">PATEN</span><span>Langkah 1 dari 3</span></div>
+      <div class="title">Laporan Kunjungan</div>
+      <div class="sub">Isi di lokasi, satu laporan per desa per kunjungan.</div>
+      <div class="bar"><i class="on"></i><i></i><i></i></div>
+    </div>
+    <main>
+      <div id="antrean" class="warn hidden"><span id="antreanTeks"></span><button type="button" id="kirimAntrean">Kirim sekarang</button></div>
+      <div class="card">
+        <div class="cap">KEGIATAN</div>
+        <label class="f">Tanggal kunjungan<input class="in" type="date" id="tanggal"></label>
+        <label class="f">Kecamatan<select class="in" id="kecamatan"></select></label>
+        <label class="f">Desa<select class="in" id="desa"></select></label>
+        <label class="f">Nama petugas<input class="in" type="text" id="petugas" placeholder="Nama lengkap" autocomplete="name"></label>
+      </div>
+      <div class="card">
+        <div class="cap">WARGA TERLAYANI</div>
+        <div class="grid2">
+          <label class="f">Laki-laki<input class="in num" type="number" inputmode="numeric" min="0" id="wargaLk" value="0"></label>
+          <label class="f">Perempuan<input class="in num" type="number" inputmode="numeric" min="0" id="wargaPr" value="0"></label>
+        </div>
+        <div class="total">Total warga <b id="totalWarga">0</b></div>
+      </div>
+      <div id="err1" class="err hidden"></div>
+    </main>
+    <div class="foot"><button class="main-btn" type="button" id="lanjut1">Lanjut</button></div>
+  </section>
+
+  <!-- LANGKAH 2 -->
+  <section id="s2" class="hidden">
+    <div class="top">
+      <div class="top-row"><button class="back" type="button" data-go="1">‹ Kembali</button><span>Langkah 2 dari 3</span></div>
+      <div class="title">Layanan &amp; berkas</div>
+      <div class="sub">Ketuk + setiap kali layanan diberikan.</div>
+      <div class="bar"><i class="on"></i><i class="on"></i><i></i></div>
+    </div>
+    <main>
+      <div class="card" style="padding:4px 16px" id="layananList"></div>
+      <div class="card">
+        <div class="total" style="background:#F1F5F9;color:#475569">Total layanan <b id="totalLayanan">0</b></div>
+        <div class="grid2">
+          <label class="f">Berkas diterima<input class="in num" type="number" inputmode="numeric" min="0" id="berkas" value="0"></label>
+          <label class="f">Perkiraan PNBP (Rp)<input class="in num" type="number" inputmode="numeric" min="0" id="pnbp" value="0"></label>
+        </div>
+      </div>
+    </main>
+    <div class="foot"><button class="main-btn" type="button" id="lanjut2">Lanjut</button></div>
+  </section>
+
+  <!-- LANGKAH 3 -->
+  <section id="s3" class="hidden">
+    <div class="top">
+      <div class="top-row"><button class="back" type="button" data-go="2">‹ Kembali</button><span>Langkah 3 dari 3</span></div>
+      <div class="title">Temuan &amp; verifikasi</div>
+      <div class="sub">Kosongkan temuan jika tidak ada.</div>
+      <div class="bar"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+    </div>
+    <main>
+      <div class="card">
+        <div class="cap">TEMUAN LAPANGAN</div>
+        <label class="f">Temuan <span class="hint">Pengaduan, potensi sengketa, batas belum jelas, tanah belum terdaftar.</span>
+          <textarea class="in" id="temuan"></textarea></label>
+        <label class="f">Tindak lanjut<input class="in" type="text" id="tindakLanjut"></label>
+        <div class="f" style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Status
+          <div class="seg" id="status"></div></div>
+      </div>
+      <div class="card">
+        <div class="cap">VERIFIKASI</div>
+        <label class="f">Konfirmasi aparat desa<input class="in" type="text" id="aparat" placeholder="Nama dan jabatan"></label>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Kepuasan warga hari ini
+          <div class="score" id="skor"></div></div>
+        <label class="f">Lokasi <span class="hint">Tekan tombol, atau tempel tautan Google Maps.</span>
+          <input class="in" type="text" id="lokasi" placeholder="Tautan atau koordinat"></label>
+        <div class="grid2">
+          <button type="button" class="dash" id="ambilLokasi">Ambil lokasi saya</button>
+          <button type="button" class="dash" id="pilihFoto">Unggah foto</button>
+        </div>
+        <input type="file" accept="image/*" capture="environment" id="foto" class="hidden">
+        <img id="thumb" class="thumb hidden" alt="Pratinjau foto kegiatan">
+      </div>
+      <div id="ganda" class="warn hidden"><span id="gandaTeks"></span><button type="button" id="kirimTetap">Kirim tetap</button></div>
+      <div id="err3" class="err hidden"></div>
+    </main>
+    <div class="foot"><button class="main-btn go" type="button" id="kirim">Kirim laporan</button></div>
+  </section>
+
+  <!-- TERKIRIM -->
+  <section id="s4" class="hidden">
+    <div class="done">
+      <div class="check"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h1 style="margin:8px 0 0;font-size:26px">Laporan terkirim</h1>
+      <p style="margin:0;color:#C7D7EA;max-width:290px;line-height:1.5">Data masuk ke basis data kantor dan langsung terhitung di dashboard pimpinan.</p>
+      <div class="sum" id="ringkasan"></div>
+      <div style="flex:1"></div>
+      <button class="main-btn white" type="button" id="baru">Laporkan desa berikutnya</button>
+      <a class="main-btn ghost" id="keDashboard" href="#">Lihat dashboard kinerja</a>
+    </div>
+  </section>
+</div>
+
+<script>
+var APP_URL = '';
+var REF = null, LAYANAN = [], state = { layanan: [], status: '', skor: 0, foto: null, paksa: false };
+var $ = function (id) { return document.getElementById(id); };
+var store = {
+  get: function (k, d) { try { var v = localStorage.getItem('paten_' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set: function (k, v) { try { localStorage.setItem('paten_' + k, JSON.stringify(v)); } catch (e) {} }
+};
+
+function show(n) {
+  ['s1', 's2', 's3', 's4'].forEach(function (s, i) { $(s).classList.toggle('hidden', i + 1 !== n); });
+  window.scrollTo(0, 0);
+}
+function hari() {
+  var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+function opt(sel, items, val) {
+  sel.innerHTML = '';
+  items.forEach(function (t) { var o = document.createElement('option'); o.value = t; o.textContent = t; sel.appendChild(o); });
+  if (val && items.indexOf(val) >= 0) sel.value = val;
+}
+function isiDesa() {
+  var kec = $('kecamatan').value;
+  opt($('desa'), REF.desa.filter(function (d) { return d.kecamatan === kec; }).map(function (d) { return d.desa; }));
+}
+function totalWarga() { $('totalWarga').textContent = (+$('wargaLk').value || 0) + (+$('wargaPr').value || 0); }
+
+function renderLayanan() {
+  var box = $('layananList'); box.innerHTML = '';
+  LAYANAN.forEach(function (l, i) {
+    var row = document.createElement('div'); row.className = 'row';
+    var name = document.createElement('span'); name.textContent = l; name.style.fontSize = '14px'; name.style.fontWeight = '500';
+    var st = document.createElement('div'); st.className = 'step';
+    var minus = document.createElement('button'); minus.type = 'button'; minus.className = 'sbtn'; minus.textContent = '−'; minus.setAttribute('aria-label', 'Kurangi ' + l);
+    var c = document.createElement('span'); c.className = 'cnt'; c.textContent = state.layanan[i];
+    var plus = document.createElement('button'); plus.type = 'button'; plus.className = 'sbtn plus'; plus.textContent = '+'; plus.setAttribute('aria-label', 'Tambah ' + l);
+    minus.onclick = function () { state.layanan[i] = Math.max(0, state.layanan[i] - 1); c.textContent = state.layanan[i]; totLay(); };
+    plus.onclick = function () { state.layanan[i]++; c.textContent = state.layanan[i]; totLay(); };
+    st.append(minus, c, plus); row.append(name, st); box.appendChild(row);
+  });
+  totLay();
+}
+function totLay() { $('totalLayanan').textContent = state.layanan.reduce(function (a, b) { return a + b; }, 0); }
+
+function renderStatus() {
+  var box = $('status'); box.innerHTML = '';
+  REF.status.forEach(function (s) {
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = s;
+    b.className = state.status === s ? 'on' : ''; b.setAttribute('aria-pressed', state.status === s);
+    b.onclick = function () { state.status = s; renderStatus(); };
+    box.appendChild(b);
+  });
+}
+function renderSkor() {
+  var box = $('skor'); box.innerHTML = '';
+  [1, 2, 3, 4, 5].forEach(function (n) {
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = n;
+    b.className = state.skor === n ? 'on' : ''; b.setAttribute('aria-label', 'Nilai ' + n); b.setAttribute('aria-pressed', state.skor === n);
+    b.onclick = function () { state.skor = state.skor === n ? 0 : n; renderSkor(); };
+    box.appendChild(b);
+  });
+}
+
+function kumpulkan() {
+  return {
+    tanggal: $('tanggal').value, kecamatan: $('kecamatan').value, desa: $('desa').value, petugas: $('petugas').value.trim(),
+    wargaLk: +$('wargaLk').value || 0, wargaPr: +$('wargaPr').value || 0, layanan: state.layanan.slice(),
+    berkas: +$('berkas').value || 0, pnbp: +$('pnbp').value || 0,
+    temuan: $('temuan').value.trim(), tindakLanjut: $('tindakLanjut').value.trim(), status: state.status,
+    aparat: $('aparat').value.trim(), lokasi: $('lokasi').value.trim(), kepuasan: state.skor || '',
+    foto: state.foto, paksa: state.paksa
+  };
+}
+function salah(id, msg) { var e = $(id); e.textContent = msg; e.classList.toggle('hidden', !msg); if (msg) e.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+
+function cek1() {
+  if (!$('tanggal').value) return 'Isi tanggal kunjungan.';
+  if (!$('desa').value) return 'Pilih desa.';
+  if (!$('petugas').value.trim()) return 'Isi nama petugas.';
+  if ((+$('wargaLk').value || 0) + (+$('wargaPr').value || 0) === 0) return 'Isi jumlah warga yang dilayani.';
+  return '';
+}
+function cek3() {
+  if ($('temuan').value.trim() && !state.status) return 'Pilih status tindak lanjut untuk temuan.';
+  if (!$('aparat').value.trim()) return 'Isi nama aparat desa yang mengonfirmasi.';
+  return '';
+}
+
+function kirim(lap, dariAntrean) {
+  var btn = $('kirim'); btn.disabled = true; btn.textContent = 'Mengirim…';
+  google.script.run
+    .withSuccessHandler(function (r) {
+      btn.disabled = false; btn.textContent = 'Kirim laporan';
+      if (r && r.ok) { selesai(r.ringkasan); return; }
+      if (r && r.ganda) { $('gandaTeks').textContent = r.pesan; $('ganda').classList.remove('hidden'); return; }
+      salah('err3', (r && r.pesan) || 'Laporan belum tersimpan.');
+    })
+    .withFailureHandler(function () {
+      btn.disabled = false; btn.textContent = 'Kirim laporan';
+      if (!dariAntrean) {
+        var q = store.get('antrean', []); q.push(lap); store.set('antrean', q);
+        salah('err3', 'Sinyal bermasalah. Laporan disimpan di HP ini dan bisa dikirim ulang dari halaman awal.');
+      }
+    })
+    .kirimLaporan(lap);
+}
+function selesai(s) {
+  var box = $('ringkasan'); box.innerHTML = '';
+  var head = document.createElement('div'); head.style.cssText = 'font-size:12px;font-weight:700;letter-spacing:1.5px;color:#5EEAD4'; head.textContent = 'RINGKASAN';
+  box.appendChild(head);
+  [['Desa', s.desa], ['Tanggal', s.tanggal.split('-').reverse().join('/')], ['Warga terlayani', s.warga + ' orang'],
+   ['Layanan diberikan', s.layanan], ['Berkas diterima', s.berkas], ['Temuan', s.temuan || 'Tidak ada']].forEach(function (p) {
+    var d = document.createElement('div'); var a = document.createElement('span'); a.textContent = p[0];
+    var b = document.createElement('b'); b.textContent = p[1]; d.append(a, b); box.appendChild(d);
+  });
+  store.set('petugas', $('petugas').value.trim());
+  show(4);
+}
+function reset() {
+  ['temuan', 'tindakLanjut', 'aparat', 'lokasi'].forEach(function (id) { $(id).value = ''; });
+  ['wargaLk', 'wargaPr', 'berkas', 'pnbp'].forEach(function (id) { $(id).value = 0; });
+  state.layanan = LAYANAN.map(function () { return 0; }); state.status = ''; state.skor = 0; state.foto = null; state.paksa = false;
+  $('thumb').classList.add('hidden'); $('ganda').classList.add('hidden'); salah('err1', ''); salah('err3', '');
+  totalWarga(); renderLayanan(); renderStatus(); renderSkor(); cekAntrean(); show(1);
+}
+function cekAntrean() {
+  var q = store.get('antrean', []);
+  $('antrean').classList.toggle('hidden', !q.length);
+  $('antreanTeks').textContent = q.length + ' laporan tersimpan di HP ini dan belum terkirim.';
+}
+function kirimAntrean() {
+  var q = store.get('antrean', []); if (!q.length) return;
+  var lap = q[0]; lap.paksa = true;
+  google.script.run.withSuccessHandler(function (r) {
+    if (r && r.ok) { q.shift(); store.set('antrean', q); cekAntrean(); if (q.length) kirimAntrean(); }
+    else { $('antreanTeks').textContent = (r && r.pesan) || 'Laporan tersimpan belum dapat dikirim.'; }
+  }).withFailureHandler(function () { $('antreanTeks').textContent = 'Masih belum ada sinyal. Coba lagi nanti.'; }).kirimLaporan(lap);
+}
+
+function kecilkanFoto(file, cb) {
+  var r = new FileReader();
+  r.onload = function () {
+    var img = new Image();
+    img.onload = function () {
+      var s = Math.min(1, 1280 / Math.max(img.width, img.height));
+      var c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      var url = c.toDataURL('image/jpeg', 0.8);
+      cb({ data: url.split(',')[1], mime: 'image/jpeg' }, url);
+    };
+    img.src = r.result;
+  };
+  r.readAsDataURL(file);
+}
+
+function mulai(ref) {
+  REF = ref; LAYANAN = ref.layanan; state.layanan = LAYANAN.map(function () { return 0; });
+  var kec = ref.desa.map(function (d) { return d.kecamatan; }).filter(function (v, i, a) { return a.indexOf(v) === i; });
+  opt($('kecamatan'), kec, store.get('kecamatan', '')); isiDesa();
+  $('tanggal').value = hari(); $('petugas').value = store.get('petugas', '');
+  renderLayanan(); renderStatus(); renderSkor(); cekAntrean();
+  $('loading').classList.add('hidden'); show(1);
+}
+
+$('kecamatan').onchange = function () { store.set('kecamatan', this.value); isiDesa(); };
+$('wargaLk').oninput = totalWarga; $('wargaPr').oninput = totalWarga;
+$('lanjut1').onclick = function () { var e = cek1(); salah('err1', e); if (!e) show(2); };
+$('lanjut2').onclick = function () { show(3); };
+document.querySelectorAll('[data-go]').forEach(function (b) { b.onclick = function () { show(+b.dataset.go); }; });
+$('kirim').onclick = function () { var e = cek3(); salah('err3', e); if (e) return; $('ganda').classList.add('hidden'); state.paksa = false; kirim(kumpulkan()); };
+$('kirimTetap').onclick = function () { state.paksa = true; $('ganda').classList.add('hidden'); kirim(kumpulkan()); };
+$('baru').onclick = reset;
+$('kirimAntrean').onclick = kirimAntrean;
+$('pilihFoto').onclick = function () { $('foto').click(); };
+$('foto').onchange = function () {
+  var f = this.files && this.files[0]; if (!f) return;
+  kecilkanFoto(f, function (foto, url) { state.foto = foto; $('thumb').src = url; $('thumb').classList.remove('hidden'); $('pilihFoto').textContent = 'Ganti foto'; });
+};
+$('ambilLokasi').onclick = function () {
+  var b = this;
+  if (!navigator.geolocation) { b.textContent = 'Tidak didukung'; return; }
+  b.textContent = 'Mencari lokasi…';
+  navigator.geolocation.getCurrentPosition(function (p) {
+    $('lokasi').value = 'https://maps.google.com/?q=' + p.coords.latitude.toFixed(6) + ',' + p.coords.longitude.toFixed(6);
+    b.textContent = 'Lokasi terisi';
+  }, function () { b.textContent = 'Lokasi diblokir, tempel tautan'; }, { enableHighAccuracy: true, timeout: 15000 });
+};
+$('keDashboard').href = 'dashboard.html';
+
+google.script.run.withSuccessHandler(mulai).withFailureHandler(function (e) {
+  $('loading').textContent = 'Formulir gagal dimuat. Periksa sinyal lalu muat ulang halaman.';
+}).getReferensi();
+</script>
+</body>
+</html>
