@@ -1,4 +1,8 @@
-# Aplikasi PATEN — Kantor Pertanahan Kab. Humbang Hasundutan
+# Aplikasi PATEN — Kantor Pertanahan Kabupaten Humbang Hasundutan
+
+Kementerian ATR/BPN · Kanwil BPN Provinsi Sumatera Utara  
+Jl. Dolok Sanggul – Sidikalang No. 269, Sirisirisi, Kec. Doloksanggul, Kab. Humbang Hasundutan, Sumatera Utara 22457  
+WhatsApp 082273784505 · kab-humbanghasundutan@atrbpn.go.id · https://kab-humbanghasundutan.atrbpn.go.id
 
 Aplikasi HP untuk pelaporan kegiatan PATEN (pelayanan pertanahan di desa setiap hari Rabu).
 

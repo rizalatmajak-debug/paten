@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<title>Dashboard PATEN</title>
+<title>Dashboard PATEN · Kantah Kab. Humbang Hasundutan</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0B2545">
 <link rel="manifest" href="manifest.json">
@@ -20,6 +20,10 @@ select,input,button{font:inherit}
 .head{background:#0B2545;color:#fff}
 .wrap{max-width:1280px;margin:0 auto;padding:20px 24px}
 .hrow{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.org{font-size:13px;color:#C7D7EA;margin-top:4px}
+.kantor{margin-top:18px;padding:16px 0 28px;border-top:1px solid #E2E8F0;font-size:12.5px;color:#64748B;line-height:1.6}
+.kantor b{color:#0B2545}
+.kantor a{color:#0F766E;text-decoration:none;font-weight:600}
 .brand{font-size:12px;font-weight:700;letter-spacing:2px;color:#5EEAD4}
 .h1{font-size:24px;font-weight:700;margin-top:4px}
 .ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px;color:#C7D7EA}
@@ -68,7 +72,7 @@ td.n,th.n{text-align:right}
 </head>
 <body>
 <div class="head"><div class="wrap hrow">
-  <div><div class="brand">PATEN · KANTOR PERTANAHAN</div><div class="h1">Kinerja Pelayanan di Desa</div></div>
+  <div><div class="brand">PATEN · KANTOR PERTANAHAN KABUPATEN HUMBANG HASUNDUTAN</div><div class="h1">Kinerja Pelayanan di Desa</div><div class="org">Kementerian ATR/BPN · Kanwil BPN Provinsi Sumatera Utara</div></div>
   <div class="ctl" id="ctl">
     <label>Periode <select id="bulan"><option value="">Semua bulan</option></select></label>
     <button class="btn" type="button" id="muat">Perbarui</button>
@@ -101,6 +105,7 @@ td.n,th.n{text-align:right}
     <th>Desa</th><th>Kecamatan</th><th class="n">Kunjungan</th><th class="n">Warga</th><th class="n">Berkas</th><th>Terakhir</th><th>Status</th>
   </tr></thead><tbody id="desa"></tbody></table></div></div>
   <p class="note" id="waktu"></p>
+  <div class="kantor"><b>Kantor Pertanahan Kabupaten Humbang Hasundutan</b><br>Jl. Dolok Sanggul – Sidikalang No. 269, Sirisirisi, Kec. Doloksanggul, Kab. Humbang Hasundutan, Sumatera Utara 22457<br>WhatsApp <a href="https://wa.me/6282273784505">082273784505</a> · <a href="mailto:kab-humbanghasundutan@atrbpn.go.id">kab-humbanghasundutan@atrbpn.go.id</a> · <a href="https://kab-humbanghasundutan.atrbpn.go.id">kab-humbanghasundutan.atrbpn.go.id</a> · Instagram <a href="https://www.instagram.com/kantahkabhumbahas/">@kantahkabhumbahas</a></div>
 </main>
 
 <script>
@@ -205,7 +210,7 @@ function render(d) {
     var s = el('td'); s.appendChild(el('span', 'chip ' + (x.kunjungan ? 'c-ok' : 'c-no'), x.kunjungan ? 'Sudah' : 'Belum')); tr.appendChild(s);
     body.appendChild(tr);
   });
-  $('waktu').textContent = 'Diperbarui ' + d.diperbarui + '. Sumber: tab Data di Google Sheet Sistem Pelaporan PATEN.';
+  $('waktu').textContent = 'Diperbarui ' + d.diperbarui + '. Sumber: basis data PATEN Kantor Pertanahan Kabupaten Humbang Hasundutan (Google Sheet Sistem Pelaporan PATEN).';
   $('loading').classList.add('hidden'); $('pinBox').classList.add('hidden'); $('isi').classList.remove('hidden');
 }
 
