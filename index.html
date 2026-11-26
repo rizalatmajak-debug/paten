@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <title>Laporan PATEN · Kantah Kab. Humbang Hasundutan</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0B2545">
+<meta name="theme-color" content="#0F5E63">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="PATEN">
@@ -18,55 +19,56 @@
 body{margin:0;font-family:Inter,Roboto,"Segoe UI",system-ui,sans-serif;background:#F1F5F9;color:#1E293B;-webkit-tap-highlight-color:transparent}
 input,select,textarea,button{font:inherit;color:inherit}
 .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:#F1F5F9}
-.top{background:#0B2545;color:#fff;padding:18px 20px 16px;display:flex;flex-direction:column;gap:6px}
-.top-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#C7D7EA}
-.brand{font-size:12px;font-weight:700;letter-spacing:2px;color:#5EEAD4}
-.back{background:none;border:0;color:#C7D7EA;padding:0;cursor:pointer;font-size:13px}
+.top{background:#0F5E63;color:#fff;padding:18px 20px 16px;display:flex;flex-direction:column;gap:6px}
+.top-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#CFE3E4}
+.brand{font-size:11px;font-weight:700;letter-spacing:1.2px;color:#FFC58F;white-space:nowrap}
+.top-row>span{white-space:nowrap}
+.back{background:none;border:0;color:#CFE3E4;padding:0;cursor:pointer;font-size:13px}
 .title{font-size:22px;font-weight:700}
-.sub{font-size:13px;color:#C7D7EA}
-.bar{display:flex;gap:6px;margin-top:8px}.bar i{flex:1;height:4px;border-radius:2px;background:#24466E}.bar i.on{background:#13A89E}
+.sub{font-size:13px;color:#CFE3E4}
+.bar{display:flex;gap:6px;margin-top:8px}.bar i{flex:1;height:4px;border-radius:2px;background:#3A7F84}.bar i.on{background:#F08A24}
 main{flex:1;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
 .card{background:#fff;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
-.cap{font-size:12px;font-weight:700;letter-spacing:1.5px;color:#0F766E}
+.cap{font-size:12px;font-weight:700;letter-spacing:1.5px;color:#0F5E63}
 label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600}
 .in{height:46px;border:1px solid #CBD5E1;border-radius:10px;padding:0 12px;background:#fff;width:100%;font-size:15px}
 textarea.in{height:70px;padding:10px 12px;resize:vertical}
-.in:focus,button:focus-visible{outline:2px solid #13A89E;outline-offset:1px}
+.in:focus,button:focus-visible{outline:2px solid #F08A24;outline-offset:1px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.num{font-size:18px;font-weight:700;color:#0B2545}
-.total{display:flex;justify-content:space-between;align-items:center;background:#E7F6F5;border-radius:10px;padding:10px 12px;font-size:13px;font-weight:600;color:#0F766E}
-.total b{font-size:20px;color:#0B2545}
+.num{font-size:18px;font-weight:700;color:#0F5E63}
+.total{display:flex;justify-content:space-between;align-items:center;background:#E6F1F2;border-radius:10px;padding:10px 12px;font-size:13px;font-weight:600;color:#0F5E63}
+.total b{font-size:20px;color:#0F5E63}
 .row{display:flex;align-items:center;justify-content:space-between;min-height:54px;border-bottom:1px solid #EEF2F6;gap:8px}
 .row:last-child{border-bottom:0}
 .step{display:flex;align-items:center;gap:10px}
-.sbtn{width:40px;height:40px;border-radius:10px;border:1px solid #CBD5E1;background:#fff;color:#0B2545;font-size:20px;cursor:pointer}
-.sbtn.plus{background:#13A89E;border:0;color:#fff}
-.cnt{min-width:24px;text-align:center;font-size:17px;font-weight:700;color:#0B2545}
+.sbtn{width:40px;height:40px;border-radius:10px;border:1px solid #CBD5E1;background:#fff;color:#0F5E63;font-size:20px;cursor:pointer}
+.sbtn.plus{background:#F08A24;border:0;color:#0F2E33}
+.cnt{min-width:24px;text-align:center;font-size:17px;font-weight:700;color:#0F5E63}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#F1F5F9;border-radius:12px;padding:4px}
 .seg button{height:42px;border:0;border-radius:9px;background:transparent;color:#475569;font-weight:600;cursor:pointer}
-.seg button.on{background:#0B2545;color:#fff}
+.seg button.on{background:#0F5E63;color:#fff}
 .score{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.score button{height:44px;border-radius:10px;border:1px solid #CBD5E1;background:#fff;color:#0B2545;font-size:16px;font-weight:700;cursor:pointer}
-.score button.on{background:#13A89E;border-color:#13A89E;color:#fff}
-.dash{height:46px;border-radius:10px;border:1px dashed #94A3B8;background:#fff;color:#0B2545;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;width:100%}
+.score button{height:44px;border-radius:10px;border:1px solid #CBD5E1;background:#fff;color:#0F5E63;font-size:16px;font-weight:700;cursor:pointer}
+.score button.on{background:#F08A24;border-color:#F08A24;color:#0F2E33}
+.dash{height:46px;border-radius:10px;border:1px dashed #94A3B8;background:#fff;color:#0F5E63;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;width:100%}
 .hint{font-size:12px;color:#64748B;font-weight:400}
 .kantor{font-size:12.5px;color:#475569;line-height:1.55;display:flex;flex-direction:column;gap:4px}
-.kantor b{color:#0B2545;font-size:13.5px}
-.kantor a{color:#0F766E;font-weight:600;text-decoration:none}
-.org{font-size:12px;color:#C7D7EA;margin-top:-2px}
+.kantor b{color:#0F5E63;font-size:13.5px}
+.kantor a{color:#0F5E63;font-weight:600;text-decoration:none}
+.org{font-size:12px;color:#CFE3E4;margin-top:-2px}
 .foot{position:sticky;bottom:0;padding:12px 16px 20px;background:#fff;border-top:1px solid #E2E8F0}
-.main-btn{width:100%;height:52px;border-radius:12px;border:0;background:#0B2545;color:#fff;font-weight:700;font-size:16px;cursor:pointer}
-.main-btn.go{background:#13A89E}
+.main-btn{width:100%;height:52px;border-radius:12px;border:0;background:#0F5E63;color:#fff;font-weight:700;font-size:16px;cursor:pointer}
+.main-btn.go{background:#F08A24;color:#0F2E33}
 .main-btn:disabled{opacity:.6}
 .err{background:#FEE2E2;color:#991B1B;border-radius:10px;padding:10px 12px;font-size:13px;font-weight:600}
 .warn{background:#FEF3C7;color:#92400E;border-radius:10px;padding:10px 12px;font-size:13px;display:flex;flex-direction:column;gap:8px}
 .warn button{align-self:flex-start;height:38px;border-radius:9px;border:0;background:#92400E;color:#fff;padding:0 14px;font-weight:600;cursor:pointer}
-.done{background:#0B2545;color:#fff;min-height:100vh;padding:56px 24px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px}
-.check{width:88px;height:88px;border-radius:44px;background:#13A89E;display:flex;align-items:center;justify-content:center}
+.done{background:#0F5E63;color:#fff;min-height:100vh;padding:56px 24px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px}
+.check{width:88px;height:88px;border-radius:44px;background:#F08A24;display:flex;align-items:center;justify-content:center}
 .sum{width:100%;background:#13345C;border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;text-align:left}
-.sum div{display:flex;justify-content:space-between;font-size:14px}.sum span{color:#C7D7EA}
-.white{background:#fff;color:#0B2545}
-.ghost{background:transparent;border:1px solid #5EEAD4;color:#5EEAD4;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.sum div{display:flex;justify-content:space-between;font-size:14px}.sum span{color:#CFE3E4}
+.white{background:#fff;color:#0F5E63}
+.ghost{background:transparent;border:1px solid #FFC58F;color:#FFC58F;text-decoration:none;display:flex;align-items:center;justify-content:center}
 .thumb{width:100%;max-height:160px;object-fit:cover;border-radius:10px}
 .hidden{display:none!important}
 .loading{padding:40px;text-align:center;color:#64748B}
@@ -79,7 +81,7 @@ textarea.in{height:70px;padding:10px 12px;resize:vertical}
   <!-- LANGKAH 1 -->
   <section id="s1" class="hidden">
     <div class="top">
-      <div class="top-row"><span class="brand">PATEN · KANTAH HUMBAHAS</span><span>Langkah 1 dari 3</span></div>
+      <div class="top-row"><span class="brand" style="display:flex;align-items:center;gap:8px"><img src="icons/icon-192.png" alt="" width="24" height="24" style="border-radius:6px">PATEN · KANTAH HUMBAHAS</span><span>Langkah 1 dari 3</span></div>
       <div class="title">Laporan Kunjungan</div>
       <div class="org">Kantor Pertanahan Kabupaten Humbang Hasundutan</div>
       <div class="sub">Isi di lokasi, satu laporan per desa per kunjungan.</div>
@@ -176,9 +178,9 @@ textarea.in{height:70px;padding:10px 12px;resize:vertical}
   <!-- TERKIRIM -->
   <section id="s4" class="hidden">
     <div class="done">
-      <div class="check"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <div class="check"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#0F5E63" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
       <h1 style="margin:8px 0 0;font-size:26px">Laporan terkirim</h1>
-      <p style="margin:0;color:#C7D7EA;max-width:290px;line-height:1.5">Data masuk ke basis data Kantor Pertanahan Kabupaten Humbang Hasundutan dan langsung terhitung di dashboard pimpinan.</p>
+      <p style="margin:0;color:#CFE3E4;max-width:290px;line-height:1.5">Data masuk ke basis data Kantor Pertanahan Kabupaten Humbang Hasundutan dan langsung terhitung di dashboard pimpinan.</p>
       <div class="sum" id="ringkasan"></div>
       <div style="flex:1"></div>
       <button class="main-btn white" type="button" id="baru">Laporkan desa berikutnya</button>
@@ -295,7 +297,7 @@ function kirim(lap, dariAntrean) {
 }
 function selesai(s) {
   var box = $('ringkasan'); box.innerHTML = '';
-  var head = document.createElement('div'); head.style.cssText = 'font-size:12px;font-weight:700;letter-spacing:1.5px;color:#5EEAD4'; head.textContent = 'RINGKASAN';
+  var head = document.createElement('div'); head.style.cssText = 'font-size:12px;font-weight:700;letter-spacing:1.5px;color:#FFC58F'; head.textContent = 'RINGKASAN';
   box.appendChild(head);
   [['Desa', s.desa], ['Tanggal', s.tanggal.split('-').reverse().join('/')], ['Warga terlayani', s.warga + ' orang'],
    ['Layanan diberikan', s.layanan], ['Berkas diterima', s.berkas], ['Temuan', s.temuan || 'Tidak ada']].forEach(function (p) {
