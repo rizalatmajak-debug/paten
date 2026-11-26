@@ -1,6 +1,6 @@
 /* Menyimpan tampilan aplikasi di HP supaya tetap terbuka saat sinyal lemah.
    Data laporan tidak disimpan di sini; antrean laporan ada di localStorage. */
-var CACHE = 'paten-v1';
+var CACHE = 'paten-v2';
 var FILES = ['./', './index.html', './dashboard.html', './api.js', './manifest.json',
   './icons/icon-192.png', './icons/icon-512.png'];
 

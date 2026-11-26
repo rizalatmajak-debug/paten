@@ -6,6 +6,23 @@ var PATEN_API = (function () {
   function ambil(k) { try { return localStorage.getItem('paten_' + k); } catch (e) { return null; } }
   function simpan(k, v) { try { if (v === null) localStorage.removeItem('paten_' + k); else localStorage.setItem('paten_' + k, v); } catch (e) {} }
 
+  function mintaKode(salah, cb) {
+    var lama = document.getElementById('patenKode'); if (lama) lama.remove();
+    var w = document.createElement('div'); w.id = 'patenKode';
+    w.style.cssText = 'position:fixed;inset:0;background:rgba(11,37,69,.92);display:flex;align-items:center;justify-content:center;z-index:9999;padding:24px;font-family:Inter,Roboto,system-ui,sans-serif';
+    w.innerHTML = '<div style="background:#fff;border-radius:16px;padding:22px;max-width:360px;width:100%;display:flex;flex-direction:column;gap:12px">' +
+      '<div style="font-size:12px;font-weight:700;letter-spacing:2px;color:#0F766E">PATEN</div>' +
+      '<div style="font-size:20px;font-weight:700;color:#0B2545">Kode petugas</div>' +
+      '<div style="font-size:14px;color:#475569">' + (salah ? '<b style="color:#B91C1C">Kode salah.</b> ' : '') + 'Masukkan kode dari koordinator PATEN. Cukup sekali di HP ini.</div>' +
+      '<input id="patenKodeIn" autocomplete="off" autocapitalize="off" style="font-size:18px;padding:12px;border:1.5px solid #CBD5E1;border-radius:10px">' +
+      '<button id="patenKodeOk" style="background:#0B2545;color:#fff;border:0;border-radius:10px;padding:13px;font-size:16px;font-weight:700">Masuk</button></div>';
+    document.body.appendChild(w);
+    var inp = document.getElementById('patenKodeIn'); inp.focus();
+    var kirim = function () { var v = inp.value.trim(); if (!v) { inp.focus(); return; } w.remove(); cb(v); };
+    document.getElementById('patenKodeOk').onclick = kirim;
+    inp.onkeydown = function (e) { if (e.key === 'Enter') kirim(); };
+  }
+
   function minta(fn, args) {
     return fetch(API_URL, {
       method: 'POST',
@@ -21,10 +38,11 @@ var PATEN_API = (function () {
   function panggil(fn, args, ok, gagal, ulang) {
     minta(fn, args).then(function (res) {
       if (res.perluKode) {
-        var kode = window.prompt(ulang ? 'Kode petugas salah. Masukkan kode petugas PATEN:' : 'Masukkan kode petugas PATEN (diminta sekali saja):', '');
-        if (kode === null) { gagal(new Error('Kode petugas diperlukan.')); return; }
-        simpan('kode', kode.trim());
-        panggil(fn, args, ok, gagal, true);
+        mintaKode(ulang, function (kode) {
+          if (kode === null) { gagal(new Error('Kode petugas diperlukan.')); return; }
+          simpan('kode', kode);
+          panggil(fn, args, ok, gagal, true);
+        });
         return;
       }
       if (res.apiError) { gagal(new Error(res.pesan)); return; }
